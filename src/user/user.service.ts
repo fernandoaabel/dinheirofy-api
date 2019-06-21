@@ -14,7 +14,9 @@ export class UserService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    //return await this.userRepository.save(createUserDto);
+    var exists = await this.findEmail(createUserDto.email);
+    if (exists) return 'Email already exists';
+
     return await this.userRepository.save({
       name: createUserDto.name,
       password: crypto
